@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Scratch Advertise Projects (restdb.io + GM_xmlhttpRequest)
+// @name         Scratch Advertise Projects (restdb.io + GM_xmlhttpRequest
 // @namespace    https://scratch.mit.edu/
-// @version      1.4
-// @description  Save and display Scratch projects using restdb.io (with CORS bypass, date update, CSS, and back button)
-// @match        https://scratch.mit.edu/advertise
+// @version      1.5
+// @description  Save and display Scratch projects using restdb.io (with CORS bypass, date update, CSS, and back button) + Advertisements button
+// @match        https://scratch.mit.edu/*
 // @grant        GM_xmlhttpRequest
 // @connect      scratchadvertise-f787.restdb.io
 // ==/UserScript==
@@ -13,6 +13,39 @@
 
     const API_URL = "https://scratchadvertise-f787.restdb.io/rest/projects";
     const API_KEY = "cd63aae7f08557b4dfb02354ca300e9acff0d";
+
+    const isAdvertisePage = window.location.pathname === "/advertise";
+
+    if (!isAdvertisePage) {
+        // Crear botón "Advertisements" en esquina superior izquierda
+        const advBtn = document.createElement('button');
+        advBtn.textContent = 'Advertisements';
+        advBtn.style.position = 'fixed';
+        advBtn.style.top = '10px';
+        advBtn.style.left = '10px';
+        advBtn.style.zIndex = '9999';
+        advBtn.style.padding = '8px 12px';
+        advBtn.style.background = '#0055cc';
+        advBtn.style.color = 'white';
+        advBtn.style.border = 'none';
+        advBtn.style.borderRadius = '6px';
+        advBtn.style.cursor = 'pointer';
+        advBtn.style.fontWeight = 'bold';
+        advBtn.style.fontSize = '14px';
+        advBtn.addEventListener('mouseenter', () => {
+            advBtn.style.background = '#003d99';
+        });
+        advBtn.addEventListener('mouseleave', () => {
+            advBtn.style.background = '#0055cc';
+        });
+        advBtn.addEventListener('click', () => {
+            window.location.href = 'https://scratch.mit.edu/advertise';
+        });
+        document.body.appendChild(advBtn);
+        return; // Salir para no cargar la UI del advertise aquí
+    }
+
+    // --- Código original para la página /advertise ---
 
     // Add styles
     const style = document.createElement('style');
