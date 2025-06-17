@@ -11,6 +11,7 @@
 (async function() {
     'use strict';
 
+
     const excludedPaths = ["/advertise", "/advertise-projects", "/advertise-studios"];
     const path = window.location.pathname;
 
@@ -119,6 +120,13 @@
 
     if (excludedPaths.includes(path)) {
         if (path === "/advertise") {
+            if (!sessionStorage.getItem("adScriptDisclaimerShown")) {
+                setTimeout(() => {
+                    alert("This script is not affiliated with Scratch. Please be sure to follow all community rules and not use this tool for spam or mass promotion.");
+                }, 0);
+                sessionStorage.setItem("adScriptDisclaimerShown", "true");
+            }
+
             document.body.innerHTML = `
                 <style>
                     body { font-family: sans-serif; background:#f5f5f5; height:100vh; margin:0;
@@ -274,3 +282,4 @@
     }
 
 })();
+
