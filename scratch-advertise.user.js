@@ -239,7 +239,10 @@
                         </div>
                     </div>`;
             }).join("");
-            document.getElementById("list").innerHTML = html || `<em>No ${label.toLowerCase()}s yet.</em>`;
+            document.getElementById("list").innerHTML = `
+                <h3>Total ${label}s: ${arr.length}</h3>
+                ${html || `<em>No ${label.toLowerCase()}s yet.</em>`}
+            `;
         }
 
         document.getElementById("btn").addEventListener("click", async ()=>{
